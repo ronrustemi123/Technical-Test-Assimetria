@@ -22,7 +22,9 @@ export async function generateArticleDb() {
   const article = {
     id: Date.now(),
     title: text.title,
+    headline: text.headline,
     content: text.content,
+    category: text.category,
     createdAt: new Date().toISOString(),
   };
 
