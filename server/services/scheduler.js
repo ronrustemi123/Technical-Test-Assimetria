@@ -4,7 +4,7 @@ import { generateArticleDb } from '../controllers/articlesController.js';
 
 
 export function scheduleArticleGenerator() {
-    cron.schedule('* * * * *', async () => {
+    cron.schedule('0 0 * * *', async () => {
         try {
             console.log("Starting daily article generation...");
             await generateArticleDb();
