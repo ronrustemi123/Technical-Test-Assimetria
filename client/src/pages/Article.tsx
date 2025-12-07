@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import RelatedArticles from "@/components/RelatedArticles";
 
 export default function Article() {
-  const { title, headline, content, createdAt, category, id } = useLoaderData();
+  const { title, headline, content, createdAt, id } = useLoaderData();
   const date = dayjs(createdAt).format("MMMM D, YYYY");
 
   const paragraphs = content.split("\n").map((p: string) => p.trim());
