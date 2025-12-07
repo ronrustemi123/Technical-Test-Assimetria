@@ -8,7 +8,7 @@ const RelatedArticles = ({ id }: { id: number }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("http://localhost:8000/articles/");
+      const res = await fetch("http://16.171.253.245:4000/articles/");
       const data = await res.json();
 
       if (!res.ok) {
