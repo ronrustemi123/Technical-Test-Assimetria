@@ -4,13 +4,12 @@ import { useLoaderData } from "react-router";
 
 const Home = () => {
   const { articles, page, pageSize, totalCount } = useLoaderData();
-  console.log(articles);
   return (
     <main>
       <div className="main-wrapper">
         <Hero articles={articles} />
         <Articles
-          articles={articles}
+          originalArticles={articles}
           page={page}
           pageSize={pageSize}
           totalCount={totalCount}

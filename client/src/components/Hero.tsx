@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 
 const Hero = ({ articles }: { articles: Article[] }) => {
-  const featuredArticle = articles[articles.length - 1];
+  const featuredArticle = articles[0];
 
   if (!featuredArticle) {
     return (

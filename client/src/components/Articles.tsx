@@ -16,17 +16,18 @@ const categories: string[] = [
 ];
 
 const Articles = ({
-  articles,
+  originalArticles,
   page,
   totalCount,
 }: {
-  articles: Article[];
+  originalArticles: Article[];
   page: number;
   pageSize: number;
   totalCount: number;
 }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const articles = originalArticles?.slice(1);
 
   const selectedCategory = searchParams.get("category") || "All";
 
