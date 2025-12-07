@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  backend:
+    image: 452202271953.dkr.ecr.eu-north-1.amazonaws.com/auto-blog-backend:latest
+    container_name: auto-blog-backend
+    env_file:
+      - ./backend.env
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+
+  frontend:
+    image: 452202271953.dkr.ecr.eu-north-1.amazonaws.com/auto-blog-frontend:latest
+    container_name: auto-blog-frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    restart: unless-stopped
