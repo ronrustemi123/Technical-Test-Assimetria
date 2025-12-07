@@ -3,20 +3,19 @@ version: 0.2
 env:
   variables:
     AWS_DEFAULT_REGION: eu-north-1
-    ECR_BACKEND_REPO: 452202271953.dkr.ecr.eu-north-1.amazonaws.com/auto-blog-backend
-    ECR_FRONTEND_REPO: 452202271953.dkr.ecr.eu-north-1.amazonaws.com/auto-blog-frontend
+    ACCOUNT_ID: "452202271953"
+    ECR_BACKEND_REPO: "452202271953.dkr.ecr.eu-north-1.amazonaws.com/auto-blog-backend"
+    ECR_FRONTEND_REPO: "452202271953.dkr.ecr.eu-north-1.amazonaws.com/auto-blog-frontend"
 
 phases:
   pre_build:
     commands:
       - echo "Logging in to Amazon ECR..."
-      - aws ecr get-login-password --region $AWS_DEFAULT_REGION \
-        | docker login --username AWS --password-stdin $(echo $ECR_BACKEND_REPO | cut -d'/' -f1)
-
-      - echo "Resolving image tag..."
+      - aws --version
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin ${ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c1-7)
       - IMAGE_TAG=${COMMIT_HASH:=latest}
-      - echo "Using tag: $IMAGE_TAG"
+      - echo "Using image tag: $IMAGE_TAG"
 
   build:
     commands:
@@ -30,11 +29,11 @@ phases:
 
   post_build:
     commands:
-      - echo "Pushing backend image to ECR..."
+      - echo "Pushing backend images..."
       - docker push $ECR_BACKEND_REPO:$IMAGE_TAG
       - docker push $ECR_BACKEND_REPO:latest
 
-      - echo "Pushing frontend image to ECR..."
+      - echo "Pushing frontend images..."
       - docker push $ECR_FRONTEND_REPO:$IMAGE_TAG
       - docker push $ECR_FRONTEND_REPO:latest
 
