@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
           const category = url.searchParams.get("category") ?? "All";
 
           const response = await fetch(
-            `http://localhost:8000/articles?page=${page}&pageSize=${pageSize}&category=${category}`,
+            `http://16.171.253.245:4000/api?page=${page}&pageSize=${pageSize}&category=${category}`,
             { signal: request.signal }
           );
 
@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
         path: "article/:id",
         Component: Article,
         loader: ({ request, params }) =>
-          fetch(`http://localhost:8000/articles/${params.id}`, {
+          fetch(`http://16.171.253.245:4000/api/articles/${params.id}`, {
             signal: request.signal,
           }),
       },
