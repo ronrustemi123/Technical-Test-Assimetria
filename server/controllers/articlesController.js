@@ -7,7 +7,6 @@ export function listArticles(req, res) {
   const category = req.query.category?.toLowerCase() || "all";
 
   let data = getAllArticles();
-
   if (category !== "all") {
     data = data.filter(
       (a) => a.category?.toLowerCase() === category

@@ -16,18 +16,20 @@ const categories: string[] = [
 ];
 
 const Articles = ({
-  originalArticles,
+  articles,
   page,
   totalCount,
 }: {
-  originalArticles: Article[];
+  articles: Article[];
   page: number;
   pageSize: number;
   totalCount: number;
 }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const articles = originalArticles.slice(1, originalArticles.length);
+  articles.sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  );
 
   const selectedCategory = searchParams.get("category") || "All";
 
@@ -48,18 +50,11 @@ const Articles = ({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
         {articles?.length ? (
-          articles
-            // @ts-ignore
-            .sort(
-              (a, b) =>
-                new Date(b.createdAt).getTime() -
-                new Date(a.createdAt).getTime()
-            )
-            .map((el: Article) => (
-              <Link key={el.id} to={`/article/${el.id}`}>
-                <ArticleCard {...el} />
-              </Link>
-            ))
+          articles.map((el: Article) => (
+            <Link key={el.id} to={`/article/${el.id}`}>
+              <ArticleCard {...el} />
+            </Link>
+          ))
         ) : (
           <p className="text-accent text-2xl col-span-3 mt-12 text-center">
             No articles found

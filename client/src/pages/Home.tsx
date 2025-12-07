@@ -9,7 +9,7 @@ const Home = () => {
       <div className="main-wrapper">
         <Hero articles={articles} />
         <Articles
-          originalArticles={articles}
+          articles={articles}
           page={page}
           pageSize={pageSize}
           totalCount={totalCount}
