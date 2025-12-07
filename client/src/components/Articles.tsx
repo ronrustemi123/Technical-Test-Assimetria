@@ -27,7 +27,7 @@ const Articles = ({
 }) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const articles = originalArticles?.slice(1);
+  const articles = originalArticles.slice(1, originalArticles.length);
 
   const selectedCategory = searchParams.get("category") || "All";
 
@@ -48,11 +48,18 @@ const Articles = ({
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
         {articles?.length ? (
-          articles.map((el: Article) => (
-            <Link key={el.id} to={`/article/${el.id}`}>
-              <ArticleCard {...el} />
-            </Link>
-          ))
+          articles
+            // @ts-ignore
+            .sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            )
+            .map((el: Article) => (
+              <Link key={el.id} to={`/article/${el.id}`}>
+                <ArticleCard {...el} />
+              </Link>
+            ))
         ) : (
           <p className="text-accent text-2xl col-span-3 mt-12 text-center">
             No articles found

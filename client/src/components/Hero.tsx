@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 
 const Hero = ({ articles }: { articles: Article[] }) => {
-  const featuredArticle = articles[0];
+  const featuredArticle = articles[articles?.length - 1];
 
   if (!featuredArticle) {
     return (
@@ -19,8 +19,8 @@ const Hero = ({ articles }: { articles: Article[] }) => {
   const date = dayjs(featuredArticle.createdAt).format("MMMM D, YYYY");
 
   return (
-    <section className="min-h-[calc(100vh-80px)] flex flex-col mt-12 md:flex-row items-center">
-      <div className="w-full md:w-1/2 mb-32 flex flex-col gap-4">
+    <section className="min-h-[calc(100vh-80px)] flex flex-col mt-12 md:flex-row gap-12 items-center">
+      <div className="w-full md:w-1/2 flex flex-col gap-4">
         <p className="text-accent font-satoshi text-sm font-medium">
           FEATURED ARTICLE
         </p>
@@ -38,7 +38,13 @@ const Hero = ({ articles }: { articles: Article[] }) => {
           </Button>
         </Link>
       </div>
-      <div className="w-full md:w-1/2"></div>
+      <div className="w-full md:w-1/2 ">
+        <img
+          src={"https://placehold.co/600x400/000000/FFF"}
+          alt="Placeholder Image"
+          className="w-full h-full object-cover max-w-[500px] ml-auto object-center rounded-xl"
+        />
+      </div>
     </section>
   );
 };
