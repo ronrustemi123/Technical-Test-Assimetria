@@ -41,8 +41,8 @@ export function getArticle(req, res) {
   res.json(article);
 }
 
-export async function generateArticleDb() {
-  const text = await generateArticle();
+export async function generateArticleDb(titles, category) {
+  const text = await generateArticle(titles, category);
 
   const article = {
     id: Date.now(),

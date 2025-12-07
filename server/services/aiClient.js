@@ -7,25 +7,48 @@ if (!OPENAI_API_KEY) {
   throw new Error("Missing OPENAI_API_KEY in .env");
 }
 
-export async function generateArticle() {
+
+
+export async function generateArticle(existingTitles, leastUsedCategory) {
+  const avoidTopics = existingTitles.length
+    ? `Avoid writing about these topics: ${existingTitles.join(", ")}.`
+    : "";
   const prompt = `
-Write a blog article about an interesting trend based on one of the categories below.
-Use the following structure:
+Write a blog article in the category: ${leastUsedCategory}
 
-Title: {short, catchy title}
+${avoidTopics}
+
+
+Use this EXACT structure and labels:
+
+Title: {short, catchy, original}
 Headline: {1-2 sentence summary}
-Category: {one of: Technology, Security, Gaming, Business, Development, Science}
+Category: {choose one: Technology, Security, Gaming, Business, Development, Science}
 
-Then write 3–6 paragraphs in simple, easy-to-understand language.
+Then write 3–6 paragraphs in friendly, easy-to-understand language.
 
-Make every article unique. No markdown or bullet formatting.
+Rules:
+- Do NOT change the required category
+- No AI assistants / chatbots / daily helper bots
+- Topic must be unique compared to all existing titles
+- No markdown or bullet lists
 `;
-
   const sysPrompt = `
 You are an expert blog writer.
-Always follow the exact requested structure including the labels: Title:, Headline:, Category:
-Category MUST be exactly one of: Technology, Security, Gaming, Business, Development, Science
-Write clearly, friendly, and with variety each time.
+Strictly follow the structure:
+
+Title:
+Headline:
+Category:
+
+Category MUST be exactly one of:
+Technology, Security, Gaming, Business, Development, Science.
+
+Never repeat topics involving:
+AI assistants, AI companions, chatbots, or personal AI helpers.
+
+Vary the subject matter and writing style every time.
+Write with clarity, creativity, and uniqueness.
 `;
 
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
