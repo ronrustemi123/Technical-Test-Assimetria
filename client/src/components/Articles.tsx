@@ -1,7 +1,9 @@
-import { useState } from "react";
 import ArticlesHeader from "./ArticlesHeader";
 import type { Article } from "@/types/Article";
 import ArticleCard from "./ArticleCard";
+import { Link } from "react-router-dom";
+import { CustomPagination } from "./CustomPagination";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const categories: string[] = [
   "All",
@@ -13,34 +15,52 @@ const categories: string[] = [
   "Science",
 ];
 
-const Articles = ({ articles }: { articles: Article[] }) => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+const Articles = ({
+  articles,
+  page,
+  totalCount,
+}: {
+  articles: Article[];
+  page: number;
+  pageSize: number;
+  totalCount: number;
+}) => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const filtered =
-    selectedCategory === "All"
-      ? articles
-      : articles.filter(
-          (el) =>
-            el?.category?.toLowerCase() === selectedCategory?.toLowerCase()
-        );
+  const selectedCategory = searchParams.get("category") || "All";
+
+  const setSelectedCategory = (value: string) => {
+    const newSearch = new URLSearchParams(searchParams);
+    newSearch.set("category", value);
+    newSearch.set("page", "1");
+    navigate(`?${newSearch.toString()}`);
+  };
 
   return (
-    <section className="min-h-screen">
+    <section className="min-h-screen mt-12">
       <ArticlesHeader
         categories={categories}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />
-      <div className="grid grid-cols-3 gap-10 mt-12">
-        {filtered.map((el) => (
-          <ArticleCard
-            key={el.id}
-            category={el.category}
-            title={el.title}
-            headline={el.headline}
-            createdAt={el.createdAt}
-          />
-        ))}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
+        {articles?.length ? (
+          articles.map((el: Article) => (
+            <Link key={el.id} to={`/article/${el.id}`}>
+              <ArticleCard {...el} />
+            </Link>
+          ))
+        ) : (
+          <p className="text-accent text-2xl col-span-3 mt-12 text-center">
+            No articles found
+          </p>
+        )}
+      </div>
+
+      <div className="mt-12">
+        <CustomPagination page={page} totalCount={totalCount} />
       </div>
     </section>
   );

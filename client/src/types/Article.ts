@@ -6,3 +6,10 @@ export interface Article {
   category: string;
   createdAt: string;
 }
+
+export interface ArticlesType {
+  articles: Article[];
+  totalCount: number;
+  page: number;
+  pageSize: number;
+}

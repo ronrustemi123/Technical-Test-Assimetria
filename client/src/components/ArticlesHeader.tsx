@@ -1,4 +1,11 @@
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const ArticlesHeader = ({
   categories,
@@ -11,8 +18,10 @@ const ArticlesHeader = ({
 }) => {
   return (
     <div className="w-full h-16  flex items-center justify-between">
-      <h2 className="text-4xl font-title font-bold">Latest Articles</h2>
-      <div>
+      <h2 className="text-2xl sm:text-4xl font-title font-extrabold">
+        Latest Articles
+      </h2>
+      <div className="hidden lg:block">
         <ToggleGroup
           type="single"
           variant="outline"
@@ -33,6 +42,21 @@ const ArticlesHeader = ({
             </ToggleGroupItem>
           ))}
         </ToggleGroup>
+      </div>
+
+      <div className="block lg:hidden">
+        <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+          <SelectTrigger className="w-[105px] shadow-none outline-0 font-satoshi">
+            <SelectValue defaultValue={"All"} />
+          </SelectTrigger>
+          <SelectContent className="font-satoshi">
+            {categories.map((el) => (
+              <SelectItem key={el} value={el}>
+                {el}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );

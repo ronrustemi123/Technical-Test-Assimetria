@@ -2,8 +2,33 @@ import { addArticle, getAllArticles, getArticleById } from "../services/articleS
 import { generateArticle } from "../services/aiClient.js";
 
 export function listArticles(req, res) {
-  res.json(getAllArticles());
+  const page = parseInt(req.query.page, 10) || 1;
+  const pageSize = parseInt(req.query.pageSize, 10) || 6;
+  const category = req.query.category?.toLowerCase() || "all";
+
+  let data = getAllArticles();
+
+  if (category !== "all") {
+    data = data.filter(
+      (a) => a.category?.toLowerCase() === category
+    );
+  }
+
+  const totalCount = data.length;
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+
+  const articles = data.slice(start, end);
+
+  res.json({
+    articles,
+    totalCount,
+    page,
+    pageSize,
+    category,
+  });
 }
+
 
 export function getArticle(req, res) {
   const id = parseInt(req.params.id, 10);
