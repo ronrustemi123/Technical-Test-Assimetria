@@ -19,8 +19,8 @@ const Hero = ({ articles }: { articles: Article[] }) => {
   const date = dayjs(featuredArticle.createdAt).format("MMMM D, YYYY");
 
   return (
-    <section className="min-h-[calc(100vh-80px)] flex flex-col mt-12 md:flex-row gap-12 items-center">
-      <div className="w-full md:w-1/2 flex flex-col gap-4">
+    <section className="min-h-[calc(100vh-80px)]  flex flex-col mt-12 md:flex-row gap-12 items-center">
+      <div className="w-full md:w-1/2 flex flex-col md:mb-32 gap-4">
         <p className="text-accent font-satoshi text-sm font-medium">
           FEATURED ARTICLE
         </p>
@@ -38,7 +38,7 @@ const Hero = ({ articles }: { articles: Article[] }) => {
           </Button>
         </Link>
       </div>
-      <div className="w-full md:w-1/2 ">
+      <div className="w-full md:w-1/2 md:mb-32">
         <img
           src={"https://placehold.co/600x400/000000/FFF"}
           alt="Placeholder Image"
