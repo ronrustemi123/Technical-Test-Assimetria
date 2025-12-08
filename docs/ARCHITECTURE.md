@@ -6,6 +6,7 @@
 
 **Technical-Test-Assimetria** is a full-stack application with a clear separation between client (frontend) and server (backend), along with infrastructure configuration. The project integrates OpenAI's API for AI-powered functionality.
 
+
 ## System Architecture
 
 ### High-Level Architecture
