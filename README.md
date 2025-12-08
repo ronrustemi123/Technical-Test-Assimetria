@@ -15,6 +15,7 @@ A full-stack auto-generated blog web application that continuously publishes fre
 
 ---
 
+
 ## Run locally (Development Mode)
 
 ### 1️⃣ Clone the repository
