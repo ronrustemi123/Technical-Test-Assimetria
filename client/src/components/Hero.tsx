@@ -19,7 +19,7 @@ const Hero = ({ articles }: { articles: Article[] }) => {
   const date = dayjs(featuredArticle.createdAt).format("MMMM D, YYYY");
 
   return (
-    <section className="min-h-[calc(100vh-80px)] bg-red-400 flex flex-col mt-12 md:flex-row gap-12 items-center">
+    <section className="min-h-[calc(100vh-80px)] flex flex-col mt-12 md:flex-row gap-12 items-center">
       <div className="w-full md:w-1/2 flex flex-col md:mb-32 gap-4">
         <p className="text-accent font-satoshi text-sm font-medium">
           FEATURED ARTICLE
